@@ -1,0 +1,24 @@
+import logging
+from telegram import Update
+from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
+
+# Logging setup
+logging.basicConfig(level=logging.INFO)
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("Namaste AvanishHEAD! Ye bot ab 24/7 Cloud par online hai. ☁️")
+
+async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(f"Bot Reply: {update.message.text}")
+
+if __name__ == '__main__':
+    # Aapka Token
+    TOKEN = "8160518734:AAGTj1ORGnpFs8cnGtSC6WXh3M6UDJKS6Hg"
+    
+    app = ApplicationBuilder().token(TOKEN).build()
+    
+    app.add_handler(CommandHandler('start', start))
+    app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), echo))
+    
+    print("Bot is running...")
+    app.run_polling()
